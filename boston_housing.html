@@ -12196,8 +12196,9 @@ Standard deviation of prices: $165,171.13
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
-<p>If we use all the available data to train a learning algorithm, the model may memorize all the data points, but not finding general patterns from the data. It may not be able to generalize well to other new data in prediction. This is called overfitting.</p>
-<p>Therefore, we need to split the dataset into training and testing set for model learning, so that the model can have some unseen data for testing purpose to ensure generalization and prevent overfitting.</p>
+<p>While training a learning algorithm, we need some sort of indicators to evaluate the performance and choose among different models. If we don't split the dataset into training and testing subset, we would only have the training accuracy for model evaluation.</p>
+<p>However, if we add more features or increase the model complexity, the training accuracy will be very likely to improve, but on the other hand, the model may not generalize well to unseen darta. Hence, training accuracy is not a good indicator for model evaluation.</p>
+<p>Therefore, we need to split the dataset into training and testing set, so that we can use the testing accuracy as well for model evaluation purpose to ensure generalization and prevent overfitting.</p>
 <p>At the same time, we need to have enough data for training purpose, otherwise the model may not have enough data to learn the pattern from, which may cause underfitting. It is crucial that we strive for a optimal split between training and testing set during model training.</p>
 
 </div>
@@ -13832,8 +13833,9 @@ mIBhSc8YY0zAsKRnjDEmYFjSM8YYEzD+H6bc88ItG3hZAAAAAElFTkSuQmCC
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>k-fold cross-validation means that we divide the training data set into k smaller subsets, and we use k-1 of the subsets of the data to train the model. Then the model is validated with the remaining subset. The general benefit here is that we do not need to reserve a particular subset of data for validation purpose, thus we can have more data for training and improve the model. 
-When doing grid search, we can use k-fold cross-validation so that the model is not being optimized against a particular subset of data fro training or testing. We can prevent the model from overfitting by switching training and testing data every time using k-fold cross-validation.</p>
+<p>k-fold cross-validation means that we divide the training data set into k smaller subsets, and we use k-1 of the subsets of the data to train the model. The default k-fold function splits the data sequentially. Therefore, if the dataset has a sorting, we should set shuffle=True to shuffle the data in order to prevent the model from learning such unrelated pattern.</p>
+<p>After each model training, it is then validated using the remaining subset. The general benefit here is that we do not need to reserve a particular subset of data for validation purpose, thus we can have more data for training and improve the model.</p>
+<p>When doing grid search, we can use k-fold cross-validation so that the model is not being optimized against a particular subset of data fro training or testing. We can prevent the model from overfitting by switching training and testing data every time using k-fold cross-validation. After training the model (parameter setting) with the highest validation score will be picked as the final model.</p>
 
 </div>
 </div>
@@ -17691,7 +17693,7 @@ Predicted selling price for Client 3&#39;s home: $931,636.36
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">vs</span><span class="o">.</span><span class="n">PredictTrials</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">fit_model</span><span class="p">,</span> <span class="n">client_data</span><span class="p">)</span>
@@ -17710,17 +17712,17 @@ Predicted selling price for Client 3&#39;s home: $931,636.36
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Trial 1: $391,183.33
-Trial 2: $419,700.00
+Trial 2: $424,935.00
 Trial 3: $415,800.00
 Trial 4: $420,622.22
-Trial 5: $418,377.27
+Trial 5: $413,334.78
 Trial 6: $411,931.58
 Trial 7: $399,663.16
 Trial 8: $407,232.00
 Trial 9: $351,577.61
 Trial 10: $413,700.00
 
-Range in prices: $69,044.61
+Range in prices: $73,357.39
 </pre>
 </div>
 </div>
@@ -17761,7 +17763,7 @@ Range in prices: $69,044.61
 </li>
 <li><p>The features are relevant but are not sufficient to describe a home. All the mentioned factors are important as well because they are decisive factors when people purchase a home.</p>
 </li>
-<li><p>The model is not robust enough to make consistent predictions because there are not enough features and they cannot explain all the variances in housing prices.</p>
+<li><p>The model is not robust enough to make consistent predictions because there are not enough features and they cannot explain all the variances in housing prices. As we can see in the sensitivity test above, the range in prices is $73,357, which is significant (high variance) to the predicted prices and not consistent enough.</p>
 </li>
 <li><p>The data collected in Boston is not applicable in a rural city because an urban city and a rural city have different charateristics (i.e. features).</p>
 </li>
